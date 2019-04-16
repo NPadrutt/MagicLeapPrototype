@@ -16,6 +16,9 @@ using UnityEngine.Events;
 using UnityEngine.XR.MagicLeap;
 using System.Collections.Generic;
 using System.Threading;
+using ZXing;
+using ZXing.QrCode;
+
 namespace MagicLeap
 {
     [RequireComponent(typeof(PrivilegeRequester))]
@@ -271,9 +274,26 @@ namespace MagicLeap
             Texture2D texture = new Texture2D(8, 8);
             bool status = texture.LoadImage(imageData);
 
+            ReadQRCode(texture);
+
             if (status && (texture.width != 8 && texture.height != 8))
             {
                 OnImageReceivedEvent.Invoke(texture);
+            }
+        }
+
+        private void ReadQRCode(Texture2D texture)
+        {
+            Debug.Log("QR Code: VERSION 1");
+            var reader = new BarcodeReader();
+            var result = reader.Decode(texture.GetPixels32(), texture.width, texture.height);
+
+            if (result != null)
+            {
+                Debug.Log("DECODED TEXT FROM QR: " + result.Text);
+            } else
+            {
+                Debug.Log("No QR Code found");
             }
         }
 
