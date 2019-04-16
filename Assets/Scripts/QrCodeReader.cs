@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.MagicLeap;
 using ZXing;
+using ZXing.Common;
+using ZXing.QrCode;
 
 public class QrCodeReader : MonoBehaviour
 {
@@ -70,7 +74,8 @@ public class QrCodeReader : MonoBehaviour
 
         if (_isCameraConnected)
         {
-            MLCamera.OnRawImageAvailable -= OnCaptureRawImageComplete;
+            MLCamera.OnRawImageAvailableYUV -= OnCaptureRawImageYuvAvailable;
+            MLCamera.OnRawImageAvailable -= OnCaptureRawImageAvailable;
             _isCapturing = false;
             DisableMLCamera();
         }
@@ -102,7 +107,8 @@ public class QrCodeReader : MonoBehaviour
 
             if (_isCameraConnected)
             {
-                MLCamera.OnRawImageAvailable -= OnCaptureRawImageComplete;
+                MLCamera.OnRawImageAvailableYUV -= OnCaptureRawImageYuvAvailable;
+                MLCamera.OnRawImageAvailable -= OnCaptureRawImageAvailable;
                 _isCapturing = false;
                 DisableMLCamera();
             }
@@ -166,6 +172,7 @@ public class QrCodeReader : MonoBehaviour
     {
         if (MLCamera.IsStarted && _isCameraConnected)
         {
+            Debug.Log("Capture Triggered.");
             var result = MLCamera.CaptureRawImageAsync();
             if (result.IsOk) _isCapturing = true;
         }
@@ -185,26 +192,21 @@ public class QrCodeReader : MonoBehaviour
         if (MLInputControllerButton.Bumper == button && !_isCapturing) TriggerAsyncCapture();
     }
 
-    /// <summary>
-    ///     Handles the event of a new image getting captured.
-    /// </summary>
-    /// <param name="imageData">The raw data of the image.</param>
-    private void OnCaptureRawImageComplete(byte[] imageData)
+    private void OnCaptureRawImageYuvAvailable(YUVFrameInfo frameInfo)
     {
-        Debug.Log("Image captured.");
-
         _isCapturing = false;
+        Debug.Log("Image YUV Captured");
+
         try
         {
-            // Initialize to 8x8 texture so there is no discrepency
-            // between uninitalized captures and error texture
-            var texture = new Texture2D(8, 8);
-            var status = texture.LoadImage(imageData);
-
-            IBarcodeReader barcodeReader = new BarcodeReader();
-            var result = barcodeReader.Decode(imageData,
-                texture.width, texture.height, 
-                RGBLuminanceSource.BitmapFormat.RGB565);
+            LuminanceSource source = new RGBLuminanceSource(frameInfo.Y.Data, (int) frameInfo.Y.Stride,
+                (int) frameInfo.Y.Height, RGBLuminanceSource.BitmapFormat.Gray8);
+            Binarizer binarizer = new HybridBinarizer(source);
+            BinaryBitmap bmp = new BinaryBitmap(binarizer);
+            QRCodeReader reader = new QRCodeReader();
+            reader.decode(bmp, new Dictionary<DecodeHintType, object>()
+                    {{DecodeHintType.TRY_HARDER, true}});
+            Result result = reader.decode(bmp);
 
             if (result != null)
             {
@@ -212,17 +214,47 @@ public class QrCodeReader : MonoBehaviour
             }
             else
             {
-                Debug.Log("Decoding Failed.");
+                Debug.Log("No QR Code found");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Something went horrrrrrribly wrong!!");
+            Debug.LogError(ex);
+        }
+    }
+    
+    private void OnCaptureRawImageAvailable(byte[] bytes)
+    {
+        _isCapturing = false;
+        Debug.Log("Image Captured");
+
+        try
+        {
+            LuminanceSource source = new RGBLuminanceSource(bytes, Screen.width, Screen.height, RGBLuminanceSource.BitmapFormat.Gray8);
+            Binarizer binarizer = new HybridBinarizer(source);
+            BinaryBitmap bmp = new BinaryBitmap(binarizer);
+            QRCodeReader reader = new QRCodeReader();
+            reader.decode(bmp,
+                new Dictionary<DecodeHintType, object>()
+                    {{DecodeHintType.TRY_HARDER, true}});
+            Result result = reader.decode(bmp);
+
+            if (result != null)
+            {
+                Debug.Log("DECODED TEXT FROM QR: " + result.Text);
+            } else
+            {
+                Debug.Log("No QR Code found");
             }
 
-            if (status && texture.width != 8 && texture.height != 8) OnImageReceivedEvent.Invoke(texture);
+            File.WriteAllBytes(Application.dataPath + "/../SavedScreen2.png", bytes);
 
         } catch (Exception ex)
         {
-            Debug.LogWarning("Something went wrong with decoding.");
-            Debug.LogWarning(ex.Message);
+            Debug.LogError("Something went horrrrrrribly wrong!!");
+            Debug.LogError(ex);
         }
-
     }
 
     #endregion
@@ -283,7 +315,8 @@ public class QrCodeReader : MonoBehaviour
             }
 
             MLInput.OnControllerButtonDown += OnButtonDown;
-            MLCamera.OnRawImageAvailable += OnCaptureRawImageComplete;
+            MLCamera.OnRawImageAvailableYUV += OnCaptureRawImageYuvAvailable;
+            MLCamera.OnRawImageAvailable += OnCaptureRawImageAvailable;
 
             _hasStarted = true;
         }
