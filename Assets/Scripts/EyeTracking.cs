@@ -33,7 +33,10 @@ public class EyeTracking : MonoBehaviour
 
             if (Physics.Raycast(Camera.transform.position, heading, out rayHit, 10.0f))
             {
-                meshRenderer.material = FocusedMaterial;
+                if (rayHit.transform.position == gameObject.transform.position)
+                {
+                    meshRenderer.material = FocusedMaterial;
+                }
             }
             else
             {
