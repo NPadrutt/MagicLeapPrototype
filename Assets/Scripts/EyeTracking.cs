@@ -13,8 +13,6 @@ public class EyeTracking : MonoBehaviour
     void Start()
     {
         MLEyes.Start();
-        transform.position = Camera.transform.position + Camera.transform.forward * 2.0f;
-
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
     }
 
@@ -31,12 +29,9 @@ public class EyeTracking : MonoBehaviour
             RaycastHit rayHit;
             heading = MLEyes.FixationPoint - Camera.transform.position;
 
-            if (Physics.Raycast(Camera.transform.position, heading, out rayHit, 10.0f))
-            {
+            if (Physics.Raycast(Camera.transform.position, heading, out rayHit, 10.0f)) {
                 meshRenderer.material = rayHit.transform.position == gameObject.transform.position ? FocusedMaterial : NonFocusedMaterial;
-            }
-            else
-            {
+            } else {
                 meshRenderer.material = NonFocusedMaterial;
             }
         }
