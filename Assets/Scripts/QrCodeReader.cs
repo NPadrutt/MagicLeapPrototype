@@ -205,10 +205,13 @@ public class QrCodeReader : MonoBehaviour
         var reader = new BarcodeReader();
         var result = reader.Decode(texture.GetPixels32(), texture.width, texture.height);
 
-        if (result != null)
+        if (result != null) 
         {
-            titleMesh.text = result.Text;
+
+            Debug.Log("QR Code Decoded...");
             Debug.Log("DECODED TEXT FROM QR: " + result.Text);
+
+            titleMesh.text = result.Text;
         } else
         {
             Debug.Log("No QR Code found");

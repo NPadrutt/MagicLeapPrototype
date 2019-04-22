@@ -2468,7 +2468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1068934455bc8524084854d45b0a0d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleMesh: {fileID: 0}
+  titleMesh: {fileID: 662333496}
 --- !u!114 &1800474136
 MonoBehaviour:
   m_ObjectHideFlags: 0
