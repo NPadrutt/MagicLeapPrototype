@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq.Expressions;
-using System.Reflection;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.XR.MagicLeap;
 using ZXing;
-using ZXing.Common;
-using ZXing.QrCode;
 
 public class QrCodeReader : MonoBehaviour
 {
     public TextMeshPro titleMesh;
+    public GameObject ContainerGameObject;
 
     #region Private Variables
 
@@ -46,6 +40,7 @@ public class QrCodeReader : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        ContainerGameObject.SetActive(false);
         var result = MLPrivileges.Start();
         if (result.IsOk)
         {
@@ -173,6 +168,12 @@ public class QrCodeReader : MonoBehaviour
         }
     }
 
+    public void TriggerHide()
+    {
+        ContainerGameObject.SetActive(false);
+        EnableMLCamera();
+    }
+
     #endregion
 
     #region Event Handlers
@@ -185,6 +186,7 @@ public class QrCodeReader : MonoBehaviour
     private void OnButtonDown(byte controllerId, MLInputControllerButton button)
     {
         if (MLInputControllerButton.Bumper == button && !_isCapturing) TriggerAsyncCapture();
+        if (MLInputControllerButton.HomeTap == button && !_isCapturing) TriggerHide();
     }
 
     private void OnCaptureRawImageComplete(byte[] imageData)
@@ -212,6 +214,10 @@ public class QrCodeReader : MonoBehaviour
             Debug.Log("DECODED TEXT FROM QR: " + result.Text);
 
             titleMesh.text = result.Text;
+
+            ContainerGameObject.SetActive(true);
+            DisableMLCamera();
+
         } else
         {
             Debug.Log("No QR Code found");
