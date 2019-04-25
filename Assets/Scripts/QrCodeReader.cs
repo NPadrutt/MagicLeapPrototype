@@ -127,11 +127,11 @@ namespace Assets.Scripts
         /// </summary>
         private void Update()
         {
-            /// Privileges have not yet been granted, go through the privilege states.
+            // Privileges have not yet been granted, go through the privilege states.
             if (_currentPrivilegeState != PrivilegeState.Granted) UpdatePrivilege();
-            /// Privileges have been granted, enable the feature and run any normal updates items.
-            /// Done in a seperate if statement so enable can be done in the same frame as the
-            /// privilege is granted.
+            // Privileges have been granted, enable the feature and run any normal updates items.
+            // Done in a seperate if statement so enable can be done in the same frame as the
+            // privilege is granted.
             if (_currentPrivilegeState == PrivilegeState.Granted) StartCapture();
         }
 
@@ -231,10 +231,10 @@ namespace Assets.Scripts
 
                 ContainerGameObject.SetActive(true);
 
-                var position = TargetTransform.position;
-                position.z = TargetTransform.position.z - 2;
 
-                ContainerGameObject.transform.position = position;
+                var heading = TargetTransform.forward;
+
+                ContainerGameObject.transform.position = heading;
             } 
             else
             {
@@ -253,13 +253,13 @@ namespace Assets.Scripts
         {
             switch (_currentPrivilegeState)
             {
-                /// Privilege API has been started successfully, ready to make requests.
+                // Privilege API has been started successfully, ready to make requests.
                 case PrivilegeState.Started:
                 {
                     RequestPrivileges();
                     break;
                 }
-                /// Privilege requests have been made, wait until all privileges are granted before enabling the feature that requires privileges.
+                // Privilege requests have been made, wait until all privileges are granted before enabling the feature that requires privileges.
                 case PrivilegeState.Requested:
                 {
                     foreach (var priv in _privilegesNeeded)
@@ -268,7 +268,7 @@ namespace Assets.Scripts
                     _currentPrivilegeState = PrivilegeState.Granted;
                     break;
                 }
-                /// Privileges have been denied, respond appropriately.
+                // Privileges have been denied, respond appropriately.
                 case PrivilegeState.Denied:
                 {
                     enabled = false;
