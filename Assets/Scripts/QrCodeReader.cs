@@ -170,7 +170,6 @@ namespace Assets.Scripts
         ///     Captures a still image using the device's camera and returns
         ///     the data path where it is saved.
         /// </summary>
-        /// <param name="fileName">The name of the file to be saved to.</param>
         public void TriggerAsyncCapture()
         {
             if (MLCamera.IsStarted && _isCameraConnected)
@@ -231,10 +230,11 @@ namespace Assets.Scripts
                 DisableMLCamera();
 
                 ContainerGameObject.SetActive(true);
-                var heading = MLEyes.FixationPoint - transform.position;
-                heading.z -= 2;
 
-                ContainerGameObject.transform.position = heading;
+                var position = TargetTransform.position;
+                position.z = TargetTransform.position.z - 2;
+
+                ContainerGameObject.transform.position = position;
             } 
             else
             {
