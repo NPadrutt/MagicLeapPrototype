@@ -1,38 +1,48 @@
 ﻿using UnityEngine;
 using UnityEngine.XR.MagicLeap;
 
-public class EyeTracking : MonoBehaviour
+namespace Assets.Scripts
 {
-    public GameObject Camera;
-    public Material FocusedMaterial, NonFocusedMaterial;
-
-    private Vector3 heading;
-    private MeshRenderer meshRenderer;
-
-    // Start is called before the first frame update
-    void Start()
+    public class EyeTracking : MonoBehaviour
     {
-        MLEyes.Start();
-        meshRenderer = gameObject.GetComponent<MeshRenderer>();
-    }
+        public GameObject Camera;
+        public Material FocusedMaterial, NonFocusedMaterial;
 
-    private void OnDisable()
-    {
-        MLEyes.Stop();
-    }
+        private Vector3 heading;
+        private MeshRenderer meshRenderer;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (MLEyes.IsStarted)
+        // Start is called before the first frame update
+        void Start()
         {
-            RaycastHit rayHit;
-            heading = MLEyes.FixationPoint - Camera.transform.position;
+            MLEyes.Start();
+            meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        }
 
-            if (Physics.Raycast(Camera.transform.position, heading, out rayHit, 10.0f)) {
-                meshRenderer.material = rayHit.transform.position == gameObject.transform.position ? FocusedMaterial : NonFocusedMaterial;
-            } else {
-                meshRenderer.material = NonFocusedMaterial;
+        private void OnDisable()
+        {
+            Debug.Log("Eye Tracking Disabled");
+            MLEyes.Stop();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (!MLEyes.IsStarted)
+            {
+                MLEyes.Start();
+                Debug.Log("Eye Tracking reenabled.");
+            }
+
+            if (MLEyes.IsStarted)
+            {
+                RaycastHit rayHit;
+                heading = MLEyes.FixationPoint - Camera.transform.position;
+
+                if (Physics.Raycast(Camera.transform.position, heading, out rayHit, 10.0f)) {
+                    meshRenderer.material = rayHit.transform.position == gameObject.transform.position ? FocusedMaterial : NonFocusedMaterial;
+                } else {
+                    meshRenderer.material = NonFocusedMaterial;
+                }
             }
         }
     }
