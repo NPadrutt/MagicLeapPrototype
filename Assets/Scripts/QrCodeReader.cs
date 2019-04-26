@@ -53,7 +53,7 @@ namespace Assets.Scripts
                 TargetTransform = CameraCache.Main.transform;
             }
 
-            ContainerGameObject.SetActive(false);
+            ContainerGameObject.SetActive(true);
             var result = MLPrivileges.Start();
             if (result.IsOk)
             {
@@ -230,8 +230,7 @@ namespace Assets.Scripts
                 DisableMLCamera();
 
                 ContainerGameObject.SetActive(true);
-
-
+                
                 var heading = TargetTransform.position + TargetTransform.forward * 2;
                 ContainerGameObject.transform.position = heading;
             } 
