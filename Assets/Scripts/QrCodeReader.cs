@@ -232,8 +232,7 @@ namespace Assets.Scripts
                 ContainerGameObject.SetActive(true);
 
 
-                var heading = TargetTransform.forward;
-
+                var heading = TargetTransform.position + TargetTransform.forward * 2;
                 ContainerGameObject.transform.position = heading;
             } 
             else
