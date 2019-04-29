@@ -2119,6 +2119,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 542d4b80cb417c4408a7fbe826b437cb, type: 2}
   DetailObjectToOpen: {fileID: 1353845307}
+  detailSide: 0
 --- !u!65 &750656388
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2640,6 +2641,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 542d4b80cb417c4408a7fbe826b437cb, type: 2}
   DetailObjectToOpen: {fileID: 1607200184}
+  detailSide: 0
 --- !u!65 &1063652607
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2844,6 +2846,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 542d4b80cb417c4408a7fbe826b437cb, type: 2}
   DetailObjectToOpen: {fileID: 1187013319}
+  detailSide: 0
 --- !u!65 &1081993801
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2957,6 +2960,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 542d4b80cb417c4408a7fbe826b437cb, type: 2}
   DetailObjectToOpen: {fileID: 418161092}
+  detailSide: 0
 --- !u!65 &1094139575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3680,7 +3684,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 732cb2e47b5c2974cb7e48a1724edbd9, type: 2}
-  DetailObjectToOpen: {fileID: 0}
+  DetailObjectToOpen: {fileID: 105716068}
+  detailSide: 1
 --- !u!65 &1188854628
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5981,7 +5986,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 9dd211f79db7bdf46a26794989ed22af, type: 2}
-  DetailObjectToOpen: {fileID: 0}
+  DetailObjectToOpen: {fileID: 105716068}
+  detailSide: 1
 --- !u!65 &2052397759
 BoxCollider:
   m_ObjectHideFlags: 0
