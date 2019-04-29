@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditorInternal;
+using UnityEngine;
 using UnityEngine.XR.MagicLeap;
 
 namespace Assets.Scripts
@@ -10,6 +11,7 @@ namespace Assets.Scripts
 
         private Vector3 heading;
         private MeshRenderer meshRenderer;
+        private bool isDetailOpen;
 
         [Tooltip("Specifies the target we will orient to. If no target is specified, the main camera will be used.")]
         private Transform targetTransform;
@@ -55,13 +57,27 @@ namespace Assets.Scripts
                 heading = MLEyes.FixationPoint - TargetTransform.position;
 
                 if (Physics.Raycast(TargetTransform.position, heading, out rayHit, 10.0f)) {
-                    meshRenderer.material = rayHit.transform.position == gameObject.transform.position ? FocusedMaterial : NonFocusedMaterial;
 
-                    if (DetailObjectToOpen != null)
+                    if (rayHit.transform.position == gameObject.transform.position)
                     {
-                        var heading = TargetTransform.position + TargetTransform.forward * 2;
-                        DetailObjectToOpen.transform.position = heading;
-                        DetailObjectToOpen.SetActive(true);
+                        meshRenderer.material = FocusedMaterial;
+
+                        if (DetailObjectToOpen != null && !isDetailOpen)
+                        {
+                            var heading = TargetTransform.position + TargetTransform.forward * 2;
+                            heading.x = -1.1f;
+                            heading.y = 0;
+
+                            DetailObjectToOpen.transform.position = heading;
+                            DetailObjectToOpen.SetActive(true);
+                            isDetailOpen = true;
+                        }
+                    }
+                    else if (isDetailOpen && rayHit.transform.position != DetailObjectToOpen.transform.position)
+                    {
+                        DetailObjectToOpen.SetActive(false);
+                        isDetailOpen = false;
+                        meshRenderer.material = NonFocusedMaterial;
                     }
                 } 
                 else 
