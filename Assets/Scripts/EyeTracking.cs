@@ -79,6 +79,9 @@ namespace Assets.Scripts
                         isDetailOpen = false;
                         meshRenderer.material = NonFocusedMaterial;
                     }
+                    else {
+                        meshRenderer.material = NonFocusedMaterial;
+                    }
                 } 
                 else 
                 {
