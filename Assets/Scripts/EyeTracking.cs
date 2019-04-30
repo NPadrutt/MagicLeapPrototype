@@ -58,6 +58,7 @@ namespace Assets.Scripts
 
         private void OnDisable()
         {
+            DetailObjectToOpen.SetActive(false);
             Debug.Log("Eye Tracking Disabled");
             MLEyes.Stop();
         }
@@ -84,8 +85,8 @@ namespace Assets.Scripts
 
                         if (DetailObjectToOpen != null && !isDetailOpen)
                         {
-                            var heading = transform.position;
-                            heading.x += DetailSide == DetailInfoSide.Left ? -0.6f : 0.6f;
+                            var heading = TargetTransform.position + TargetTransform.forward * 1.9f;
+                            //heading.x += DetailSide == DetailInfoSide.Left ? -0.6f : 0.6f;
 
                             DetailObjectToOpen.transform.position = heading;
                             DetailObjectToOpen.SetActive(true);
