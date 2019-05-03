@@ -85,8 +85,8 @@ namespace Assets.Scripts
 
                         if (DetailObjectToOpen != null && !isDetailOpen)
                         {
-                            var heading = TargetTransform.position + TargetTransform.forward * 1.9f;
-                            //heading.x += DetailSide == DetailInfoSide.Left ? -0.6f : 0.6f;
+                            var heading = TargetTransform.position + TargetTransform.forward * 1.5f;
+                            heading.x += DetailSide == DetailInfoSide.Left ? -0.3f : 0.3f;
 
                             DetailObjectToOpen.transform.position = heading;
                             DetailObjectToOpen.SetActive(true);
