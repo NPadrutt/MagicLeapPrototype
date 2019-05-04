@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics.Tracing;
+using UnityEngine;
 using UnityEngine.XR.MagicLeap;
 
 namespace Assets.Scripts {
@@ -12,6 +13,7 @@ namespace Assets.Scripts {
     {
         public Material FocusedMaterial, NonFocusedMaterial;
         public GameObject DetailObjectToOpen;
+        public int missed;
 
         [Tooltip("Specifies the axis about which the object will rotate.")] [SerializeField]
         private DetailInfoSide detailSide = DetailInfoSide.Left;

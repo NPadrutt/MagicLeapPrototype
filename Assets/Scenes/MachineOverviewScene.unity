@@ -1349,7 +1349,7 @@ GameObject:
   - component: {fileID: 447035136}
   m_Layer: 0
   m_Name: TitlePanel
-  m_TagString: Untagged
+  m_TagString: ReadingArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1454,7 +1454,7 @@ GameObject:
   - component: {fileID: 463392760}
   m_Layer: 0
   m_Name: ReadingArea
-  m_TagString: Untagged
+  m_TagString: ReadingArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1846,7 +1846,7 @@ GameObject:
   - component: {fileID: 661795917}
   m_Layer: 0
   m_Name: ReadingArea
-  m_TagString: Untagged
+  m_TagString: ReadingArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2690,6 +2690,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 542d4b80cb417c4408a7fbe826b437cb, type: 2}
   DetailObjectToOpen: {fileID: 1353845307}
+  missed: 0
   detailSide: 0
 --- !u!65 &750656388
 BoxCollider:
@@ -3400,6 +3401,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 542d4b80cb417c4408a7fbe826b437cb, type: 2}
   DetailObjectToOpen: {fileID: 1607200184}
+  missed: 0
   detailSide: 0
 --- !u!65 &1063652607
 BoxCollider:
@@ -3605,6 +3607,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 542d4b80cb417c4408a7fbe826b437cb, type: 2}
   DetailObjectToOpen: {fileID: 1187013319}
+  missed: 0
   detailSide: 0
 --- !u!65 &1081993801
 BoxCollider:
@@ -3719,6 +3722,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 542d4b80cb417c4408a7fbe826b437cb, type: 2}
   DetailObjectToOpen: {fileID: 418161092}
+  missed: 0
   detailSide: 0
 --- !u!65 &1094139575
 BoxCollider:
@@ -4443,6 +4447,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 732cb2e47b5c2974cb7e48a1724edbd9, type: 2}
   DetailObjectToOpen: {fileID: 105716068}
+  missed: 0
   detailSide: 1
 --- !u!65 &1188854628
 BoxCollider:
@@ -5715,7 +5720,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1570210427}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.4999994}
+  m_LocalPosition: {x: 0, y: 0, z: -0.6999994}
   m_LocalScale: {x: 0.5555556, y: 0.5555556, z: 5}
   m_Children: []
   m_Father: {fileID: 209249884}
@@ -6540,7 +6545,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "Materialbeh\xE4lter bald leer"
+  m_text: "Materialbeh\xE4lter bald \nleer"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6609,12 +6614,12 @@ MonoBehaviour:
   m_margin: {x: 0.6113472, y: -0.7601907, z: 0.6052618, w: 1.0664933}
   m_textInfo:
     textComponent: {fileID: 1984061198}
-    characterCount: 26
+    characterCount: 27
     spriteCount: 0
-    spaceCount: 2
+    spaceCount: 3
     wordCount: 3
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -6739,6 +6744,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 9dd211f79db7bdf46a26794989ed22af, type: 2}
   DetailObjectToOpen: {fileID: 105716068}
+  missed: 0
   detailSide: 1
 --- !u!65 &2052397759
 BoxCollider:
