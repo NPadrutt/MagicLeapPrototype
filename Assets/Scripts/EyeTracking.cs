@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.XR.MagicLeap;
 
-namespace Assets.Scripts
-{
+namespace Assets.Scripts {
     public enum DetailInfoSide
     {
         Left,
@@ -79,7 +78,7 @@ namespace Assets.Scripts
 
                 if (Physics.Raycast(TargetTransform.position, heading, out rayHit, 10.0f))
                 {
-                    if (rayHit.transform.position == gameObject.transform.position)
+                    if (rayHit.collider.gameObject == gameObject)
                     {
                         meshRenderer.material = FocusedMaterial;
 
@@ -93,12 +92,11 @@ namespace Assets.Scripts
                             isDetailOpen = true;
                         }
                     }
-                    else if (isDetailOpen && rayHit.transform.position == DetailObjectToOpen.transform.position)
+                    else if (rayHit.collider.gameObject == DetailObjectToOpen || rayHit.collider.gameObject.tag == "ReadingArea")
                     {
                         meshRenderer.material = NonFocusedMaterial;
                     }
-                    else
-                    {
+                    else {
                         DetailObjectToOpen.SetActive(false);
                         isDetailOpen = false;
                         meshRenderer.material = NonFocusedMaterial;
