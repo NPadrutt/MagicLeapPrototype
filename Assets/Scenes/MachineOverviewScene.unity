@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 80489677}
   m_Layer: 0
   m_Name: QueueTitle
-  m_TagString: Untagged
+  m_TagString: ReadingArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2149,7 +2149,7 @@ GameObject:
   - component: {fileID: 680876295}
   m_Layer: 0
   m_Name: StatusTitle
-  m_TagString: Untagged
+  m_TagString: ReadingArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2690,7 +2690,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 542d4b80cb417c4408a7fbe826b437cb, type: 2}
   DetailObjectToOpen: {fileID: 1353845307}
-  missed: 0
+  missedCounter: 0
   detailSide: 0
 --- !u!65 &750656388
 BoxCollider:
@@ -3401,7 +3401,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 542d4b80cb417c4408a7fbe826b437cb, type: 2}
   DetailObjectToOpen: {fileID: 1607200184}
-  missed: 0
+  missedCounter: 0
   detailSide: 0
 --- !u!65 &1063652607
 BoxCollider:
@@ -3607,7 +3607,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 542d4b80cb417c4408a7fbe826b437cb, type: 2}
   DetailObjectToOpen: {fileID: 1187013319}
-  missed: 0
+  missedCounter: 0
   detailSide: 0
 --- !u!65 &1081993801
 BoxCollider:
@@ -3722,7 +3722,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 542d4b80cb417c4408a7fbe826b437cb, type: 2}
   DetailObjectToOpen: {fileID: 418161092}
-  missed: 0
+  missedCounter: 0
   detailSide: 0
 --- !u!65 &1094139575
 BoxCollider:
@@ -3796,7 +3796,7 @@ GameObject:
   - component: {fileID: 1135834708}
   m_Layer: 0
   m_Name: QueueItem2
-  m_TagString: Untagged
+  m_TagString: ReadingArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4408,7 +4408,7 @@ GameObject:
   - component: {fileID: 1188854627}
   m_Layer: 0
   m_Name: BarTotal
-  m_TagString: Untagged
+  m_TagString: ReadingArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4447,7 +4447,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 732cb2e47b5c2974cb7e48a1724edbd9, type: 2}
   DetailObjectToOpen: {fileID: 105716068}
-  missed: 0
+  missedCounter: 0
   detailSide: 1
 --- !u!65 &1188854628
 BoxCollider:
@@ -6108,7 +6108,7 @@ GameObject:
   - component: {fileID: 1771058840}
   m_Layer: 0
   m_Name: QueueItem1
-  m_TagString: Untagged
+  m_TagString: ReadingArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6297,7 +6297,7 @@ GameObject:
   - component: {fileID: 1884604682}
   m_Layer: 0
   m_Name: CurrentJobTitle
-  m_TagString: Untagged
+  m_TagString: ReadingArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6705,7 +6705,7 @@ GameObject:
   - component: {fileID: 2052397758}
   m_Layer: 0
   m_Name: BarCurrentState
-  m_TagString: Untagged
+  m_TagString: ReadingArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6744,7 +6744,7 @@ MonoBehaviour:
   FocusedMaterial: {fileID: 2100000, guid: a2737f95e5ac3354699db0603ccc174d, type: 2}
   NonFocusedMaterial: {fileID: 2100000, guid: 9dd211f79db7bdf46a26794989ed22af, type: 2}
   DetailObjectToOpen: {fileID: 105716068}
-  missed: 0
+  missedCounter: 0
   detailSide: 1
 --- !u!65 &2052397759
 BoxCollider:
