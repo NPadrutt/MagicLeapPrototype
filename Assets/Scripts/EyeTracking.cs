@@ -13,7 +13,7 @@ namespace Assets.Scripts {
     {
         public Material FocusedMaterial, NonFocusedMaterial;
         public GameObject DetailObjectToOpen;
-        public int missed;
+        public int missedCounter;
 
         [Tooltip("Specifies the axis about which the object will rotate.")] [SerializeField]
         private DetailInfoSide detailSide = DetailInfoSide.Left;
@@ -59,9 +59,9 @@ namespace Assets.Scripts {
 
         private void OnDisable()
         {
-            DetailObjectToOpen.SetActive(false);
             Debug.Log("Eye Tracking Disabled");
             MLEyes.Stop();
+            DetailObjectToOpen?.SetActive(false);
         }
 
         // Update is called once per frame
@@ -80,6 +80,7 @@ namespace Assets.Scripts {
 
                 if (Physics.Raycast(TargetTransform.position, heading, out rayHit, 10.0f))
                 {
+                    missedCounter = 0;
                     if (rayHit.collider.gameObject == gameObject)
                     {
                         meshRenderer.material = FocusedMaterial;
@@ -106,9 +107,14 @@ namespace Assets.Scripts {
                 }
                 else
                 {
-                    DetailObjectToOpen.SetActive(false);
-                    isDetailOpen = false;
-                    meshRenderer.material = NonFocusedMaterial;
+                    missedCounter++;
+
+                    if (missedCounter >= 8)
+                    {
+                        DetailObjectToOpen.SetActive(false);
+                        isDetailOpen = false;
+                        meshRenderer.material = NonFocusedMaterial;
+                    }
                 }
             }
         }
