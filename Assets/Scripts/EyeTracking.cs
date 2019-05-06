@@ -87,8 +87,12 @@ namespace Assets.Scripts {
 
                         if (DetailObjectToOpen != null && !isDetailOpen)
                         {
-                            var heading = gameObject.transform.position ;
-                            heading.x += DetailSide == DetailInfoSide.Left ? -0.55f : 0.6f;
+                            if (detailSide == DetailInfoSide.Left)
+                            {
+                                heading = gameObject.transform.position + gameObject.transform.right * -0.8f;
+                            } else {
+                                heading = gameObject.transform.position + gameObject.transform.right * 0.7f;
+                            }
 
                             DetailObjectToOpen.transform.position = heading;
                             DetailObjectToOpen.SetActive(true);

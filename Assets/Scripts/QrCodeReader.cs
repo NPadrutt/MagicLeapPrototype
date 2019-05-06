@@ -53,7 +53,7 @@ namespace Assets.Scripts
                 TargetTransform = CameraCache.Main.transform;
             }
 
-            ContainerGameObject.SetActive(true);
+            ContainerGameObject.SetActive(false);
             var result = MLPrivileges.Start();
             if (result.IsOk)
             {
