@@ -13,7 +13,6 @@ namespace Assets.Scripts {
     {
         public Material FocusedMaterial, NonFocusedMaterial;
         public GameObject DetailObjectToOpen;
-        public int missedCounter;
 
         [Tooltip("Specifies the axis about which the object will rotate.")] [SerializeField]
         private DetailInfoSide detailSide = DetailInfoSide.Left;
@@ -36,7 +35,7 @@ namespace Assets.Scripts {
         private Vector3 heading;
         private MeshRenderer meshRenderer;
         private bool isDetailOpen;
-
+        private int missedCounter;
 
         // Start is called before the first frame update
         void Start()
@@ -99,13 +98,15 @@ namespace Assets.Scripts {
                             isDetailOpen = true;
                         }
                     }
-                    else if (rayHit.collider.gameObject == DetailObjectToOpen || rayHit.collider.gameObject.tag == "ReadingArea")
+                    else if (rayHit.collider.gameObject == DetailObjectToOpen || rayHit.collider.gameObject.tag == "ReadingArea") 
                     {
+                        missedCounter = 0;
                         meshRenderer.material = NonFocusedMaterial;
-                    }
+                    } 
                     else {
                         DetailObjectToOpen.SetActive(false);
                         isDetailOpen = false;
+                        missedCounter = 0;
                         meshRenderer.material = NonFocusedMaterial;
                     }
                 }
