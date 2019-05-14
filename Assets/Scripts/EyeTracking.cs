@@ -82,6 +82,11 @@ namespace Assets.Scripts {
                     missedCounter = 0;
                     if (rayHit.collider.gameObject == gameObject)
                     {
+                        foreach (var menuItem in GameObject.FindGameObjectsWithTag("MenuItem"))
+                        {
+                            menuItem.GetComponent<Renderer>().material = NonFocusedMaterial;
+                        }
+
                         meshRenderer.material = FocusedMaterial;
 
                         if (DetailObjectToOpen != null && !isDetailOpen)
@@ -101,7 +106,6 @@ namespace Assets.Scripts {
                     else if (rayHit.collider.gameObject == DetailObjectToOpen || rayHit.collider.gameObject.tag == "ReadingArea") 
                     {
                         missedCounter = 0;
-                        meshRenderer.material = NonFocusedMaterial;
                     } 
                     else {
                         DetailObjectToOpen.SetActive(false);
