@@ -233,7 +233,17 @@ namespace Assets.Scripts
         /// <param name="button">The button that is being pressed.</param>
         private void OnButtonDown(byte controllerId, MLInputControllerButton button)
         {
-            if (MLInputControllerButton.Bumper == button && !isCapturing) TriggerAsyncCapture();
+            if (MLInputControllerButton.Bumper == button && !isCapturing)
+            {
+                if (!MLCamera.IsStarted)
+                {
+                    StartCapture();
+                }
+                else
+                {
+                    TriggerAsyncCapture();
+                }
+            }
             if (MLInputControllerButton.HomeTap == button && !isCapturing) TriggerHide();
         }
 
