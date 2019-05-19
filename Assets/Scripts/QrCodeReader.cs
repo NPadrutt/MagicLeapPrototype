@@ -11,17 +11,15 @@ namespace Assets.Scripts
         public TextMeshPro titleMesh;
         public GameObject ContainerGameObject;
 
-        [Tooltip("Specifies the target we will orient to. If no target is specified, the main camera will be used.")]
-        private Transform targetTransform;
-        public Transform TargetTransform {
-            get { return targetTransform; }
-            set { targetTransform = value; }
-        }
+        [field: Tooltip("Specifies the target we will orient to. If no target is specified, the main camera will be used.")]
+        public Transform TargetTransform { get; set; }
 
         #region Private Variables
 
-        private bool _isCameraConnected;
-        private bool _isCapturing;
+        private bool isCameraConnected;
+        private bool isCapturing;
+
+        private MLHandKeyPose[] gestures;
 
         private enum PrivilegeState
         {
@@ -64,6 +62,17 @@ namespace Assets.Scripts
                 Debug.LogError("Privilege Error: failed to startup");
                 enabled = false;
             }
+
+            MLHands.Start(); // Start the hand tracking.
+
+            gestures = new MLHandKeyPose[3]; //Assign the gestures we will look for.
+            gestures[0] = MLHandKeyPose.Fist;
+            gestures[1] = MLHandKeyPose.OpenHandBack;
+            gestures[2] = MLHandKeyPose.Thumb;
+
+            // Enable the hand poses.
+            MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
+
         }
 
         /// <summary>
@@ -77,10 +86,15 @@ namespace Assets.Scripts
                 MLInput.Stop();
             }
 
-            if (_isCameraConnected)
+            if (MLHands.IsStarted)
+            {
+                MLHands.Stop();
+            }
+
+            if (isCameraConnected)
             {
                 MLCamera.OnRawImageAvailable -= OnCaptureRawImageComplete;
-                _isCapturing = false;
+                isCapturing = false;
                 DisableMLCamera();
             }
 
@@ -109,10 +123,10 @@ namespace Assets.Scripts
                     _currentPrivilegeState = PrivilegeState.Started;
                 }
 
-                if (_isCameraConnected)
+                if (isCameraConnected)
                 {
                     MLCamera.OnRawImageAvailable -= OnCaptureRawImageComplete;
-                    _isCapturing = false;
+                    isCapturing = false;
                     DisableMLCamera();
                 }
 
@@ -129,10 +143,22 @@ namespace Assets.Scripts
         {
             // Privileges have not yet been granted, go through the privilege states.
             if (_currentPrivilegeState != PrivilegeState.Granted) UpdatePrivilege();
-            // Privileges have been granted, enable the feature and run any normal updates items.
-            // Done in a seperate if statement so enable can be done in the same frame as the
-            // privilege is granted.
-            if (_currentPrivilegeState == PrivilegeState.Granted) StartCapture();
+
+
+            if (GetGesture(MLHands.Left, MLHandKeyPose.OpenHandBack) || GetGesture(MLHands.Right, MLHandKeyPose.OpenHandBack))
+            {
+                TriggerHide();
+            }
+
+            if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb) || GetGesture(MLHands.Right, MLHandKeyPose.Thumb))
+            {
+                if (_currentPrivilegeState == PrivilegeState.Granted) TriggerAsyncCapture();
+            }
+
+            if (GetGesture(MLHands.Left, MLHandKeyPose.Fist) || GetGesture(MLHands.Right, MLHandKeyPose.Fist))
+            {
+                if (_currentPrivilegeState == PrivilegeState.Granted) StartCapture();
+            }
         }
 
         #endregion
@@ -149,10 +175,10 @@ namespace Assets.Scripts
             if (result.IsOk)
             {
                 result = MLCamera.Connect();
-                _isCameraConnected = result.IsOk;
+                isCameraConnected = result.IsOk;
             }
 
-            return _isCameraConnected;
+            return isCameraConnected;
         }
 
         /// <summary>
@@ -162,7 +188,7 @@ namespace Assets.Scripts
         {
             MLCamera.Disconnect();
             // Explicitly set to false here as the disconnect was attempted.
-            _isCameraConnected = false;
+            isCameraConnected = false;
             MLCamera.Stop();
         }
 
@@ -172,18 +198,17 @@ namespace Assets.Scripts
         /// </summary>
         public void TriggerAsyncCapture()
         {
-            if (MLCamera.IsStarted && _isCameraConnected)
+            if (MLCamera.IsStarted && isCameraConnected)
             {
                 Debug.Log("Capture Triggered.");
                 var result = MLCamera.CaptureRawImageAsync();
-                if (result.IsOk) _isCapturing = true;
+                if (result.IsOk) isCapturing = true;
             }
         }
 
         public void TriggerHide()
         {
             ContainerGameObject.SetActive(false);
-            EnableMLCamera();
         }
 
         #endregion
@@ -197,13 +222,13 @@ namespace Assets.Scripts
         /// <param name="button">The button that is being pressed.</param>
         private void OnButtonDown(byte controllerId, MLInputControllerButton button)
         {
-            if (MLInputControllerButton.Bumper == button && !_isCapturing) TriggerAsyncCapture();
-            if (MLInputControllerButton.HomeTap == button && !_isCapturing) TriggerHide();
+            if (MLInputControllerButton.Bumper == button && !isCapturing) TriggerAsyncCapture();
+            if (MLInputControllerButton.HomeTap == button && !isCapturing) TriggerHide();
         }
 
         private void OnCaptureRawImageComplete(byte[] imageData)
         {
-            _isCapturing = false;
+            isCapturing = false;
 
             // Initialize to 8x8 texture so there is no discrepency
             // between uninitalized captures and error texture
@@ -243,6 +268,21 @@ namespace Assets.Scripts
         #endregion
 
         #region Private Functions
+
+        bool GetGesture(MLHand hand, MLHandKeyPose type)
+        {
+            if (hand != null)
+            {
+                if (hand.KeyPose == type)
+                {
+                    if (hand.KeyPoseConfidence > 0.9f)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
         /// <summary>
         ///     Handle the privilege states.
