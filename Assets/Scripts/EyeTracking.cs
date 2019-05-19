@@ -80,6 +80,7 @@ namespace Assets.Scripts {
                 if (Physics.Raycast(TargetTransform.position, heading, out rayHit, 10.0f))
                 {
                     missedCounter = 0;
+
                     if (rayHit.collider.gameObject == gameObject)
                     {
                         foreach (var menuItem in GameObject.FindGameObjectsWithTag("MenuItem"))
@@ -118,7 +119,7 @@ namespace Assets.Scripts {
                 {
                     missedCounter++;
 
-                    if (missedCounter >= 8)
+                    if (missedCounter >= 30)
                     {
                         DetailObjectToOpen.SetActive(false);
                         isDetailOpen = false;

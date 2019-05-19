@@ -52,6 +52,7 @@ namespace Assets.Scripts
             }
 
             ContainerGameObject.SetActive(false);
+
             var result = MLPrivileges.Start();
             if (result.IsOk)
             {
@@ -63,6 +64,11 @@ namespace Assets.Scripts
                 enabled = false;
             }
 
+            StartHandTracking();
+        }
+
+        private void StartHandTracking()
+        {
             MLHands.Start(); // Start the hand tracking.
 
             gestures = new MLHandKeyPose[3]; //Assign the gestures we will look for.
@@ -72,7 +78,7 @@ namespace Assets.Scripts
 
             // Enable the hand poses.
             MLHands.KeyPoseManager.EnableKeyPoses(gestures, true, false);
-
+            Debug.LogError("Hand Tracking started");
         }
 
         /// <summary>
@@ -144,19 +150,23 @@ namespace Assets.Scripts
             // Privileges have not yet been granted, go through the privilege states.
             if (_currentPrivilegeState != PrivilegeState.Granted) UpdatePrivilege();
 
-
             if (GetGesture(MLHands.Left, MLHandKeyPose.OpenHandBack) || GetGesture(MLHands.Right, MLHandKeyPose.OpenHandBack))
             {
+                Debug.Log("Recognized Open Hand BackHand Pose");
                 TriggerHide();
             }
 
             if (GetGesture(MLHands.Left, MLHandKeyPose.Thumb) || GetGesture(MLHands.Right, MLHandKeyPose.Thumb))
             {
+                Debug.Log($"Privilege state: {_currentPrivilegeState}");
+                Debug.Log("Recognized Thumb Hand Pose");
                 if (_currentPrivilegeState == PrivilegeState.Granted) TriggerAsyncCapture();
             }
 
             if (GetGesture(MLHands.Left, MLHandKeyPose.Fist) || GetGesture(MLHands.Right, MLHandKeyPose.Fist))
             {
+                Debug.Log($"Privilege state: {_currentPrivilegeState}");
+                Debug.Log("Recognized Fist Hand Pose");
                 if (_currentPrivilegeState == PrivilegeState.Granted) StartCapture();
             }
         }
@@ -189,6 +199,7 @@ namespace Assets.Scripts
             MLCamera.Disconnect();
             // Explicitly set to false here as the disconnect was attempted.
             isCameraConnected = false;
+            _hasStarted = false;
             MLCamera.Stop();
         }
 
@@ -320,6 +331,7 @@ namespace Assets.Scripts
         /// </summary>
         private void StartCapture()
         {
+            Debug.LogError($"has started: {_hasStarted}");
             if (!_hasStarted)
             {
                 var result = MLInput.Start();
